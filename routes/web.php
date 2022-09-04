@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\CategoriesController;
+use App\Http\Controllers\Admin\ProductsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +17,36 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::prefix('categories')->group(function(){
+        Route::get('/',[CategoriesController::class,'index'] );
+        Route::get('/edit', [CategoriesController::class,'getCategory']);
+    });
+
+Route::middleware('auth.admin')->prefix('admin')->group(function(){
+    Route::get('/', [DashboardController::class, 'index']);
+    Route::prefix('products')->group(function(){
+        Route::get('/', [ProductsController::class,'index']);
+        Route::get('/add',[ProductsController::class,'addProduct'])->name('product.add');
+        Route::get('/edit', function(){
+            return 'Sua sp';
+        });
+        Route::get('/delete', function(){
+            return 'Xoa sp';
+        });
+    });
+
+    Route::prefix('categories')->group(function(){
+        //get danh sach danh muc
+        Route::get('/',[CategoriesController::class,'index'] );
+        //hien thi form add danh muc
+        Route::get('/add', [CategoriesController::class,'addCategory'])->name('categories.add');
+        //xu li them danh muc
+        Route::post('/add', [CategoriesController::class,'handleAddCategory']);
+        Route::get('/edit/{id}', [CategoriesController::class,'getCategory']);
+        Route::post('/edit/{id}', [CategoriesController::class,'updateCategory']);
+        Route::get('/delete/{id}', [CategoriesController::class,'deleteCategory']);
+    });
 });
+
+Route::get('/', [HomeController::class, 'index']);
+
