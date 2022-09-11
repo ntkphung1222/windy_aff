@@ -23,9 +23,10 @@ Route::prefix('categories')->group(function(){
     });
 
 Route::middleware('auth.admin')->prefix('admin')->group(function(){
+    Route::get('/login', [DashboardController::class, 'login']);
     Route::get('/', [DashboardController::class, 'index']);
-    Route::prefix('products')->group(function(){
-        Route::get('/', [ProductsController::class,'index']);
+    Route::prefix('products')->name('products.')->group(function(){
+        Route::get('/', [ProductsController::class,'index'])->name('index');
         Route::get('/add',[ProductsController::class,'addProduct'])->name('product.add');
         Route::get('/edit', function(){
             return 'Sua sp';
@@ -35,11 +36,11 @@ Route::middleware('auth.admin')->prefix('admin')->group(function(){
         });
     });
 
-    Route::prefix('categories')->group(function(){
+    Route::prefix('categories')->name('categories.')->group(function(){
         //get danh sach danh muc
-        Route::get('/',[CategoriesController::class,'index'] );
+        Route::get('/',[CategoriesController::class,'index'])->name('index');
         //hien thi form add danh muc
-        Route::get('/add', [CategoriesController::class,'addCategory'])->name('categories.add');
+        Route::post('/', [CategoriesController::class,'postAddCategory']);
         //xu li them danh muc
         Route::post('/add', [CategoriesController::class,'handleAddCategory']);
         Route::get('/edit/{id}', [CategoriesController::class,'getCategory']);

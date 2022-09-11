@@ -10,7 +10,10 @@ class DashboardController extends Controller
     public function __construct(){
 
     }
+    public function login(){
+        return view('admin/login');
+    }
     public function index(){
-        return view('dashboard');
+        return view('admin/dashboard');
     }
 }

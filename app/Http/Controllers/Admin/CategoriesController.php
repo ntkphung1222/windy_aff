@@ -1,38 +1,65 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use PhpParser\Node\Expr\Cast\Object_;
+use App\Models\Categories;
 
 class CategoriesController extends Controller
 {
-   public function __construct()
-   {
-    
-   }
+    private $cate;
+    public function __construct()
+    {
+        $this->cate = new Categories();
+    }
 
-   public function index(){
-    return view('admin/categories/list');
-   }
+    public function index()
+    {
+        $header = [
+            '#',
+            'Name',
+            'Delete'    
+        ];
+        //$cate = new Categories();
+        $cateList = $this->cate->getListCategories();
+        return view('admin/categories/index', compact('cateList','header'));
+    }
 
-   public function getCategory($id){
-    return view('admin/categories/edit');
-   }
+    public function getCategory($id)
+    {
+        return view('admin/categories/edit');
+    }
 
-   public function addCategory(){
-    return view('admin/categories/add');
-   }
+    public function postAddCategory(Request $request){
+        $request->validate([
+            'cate_name' => 'required',
+        ],[
+            'cate_name.required' => 'Please enter category name!'
+        ]);
 
-   public function handleAddCategory(){
-    return redirect(route('categories.add'));
-    //return 'sub mit  add dmuc';
-   }
+        $dataInsert = [
+            'cate_name' => $request->cate_name,
+        ];
+        $this->cate->addCategory($dataInsert);
+        return redirect()->route('categories.index')->with('msg','Successfully!');
+    }
 
-   public function updateCategory($id){
-    return 'submit update';
-   }
+    public function handleAddCategory()
+    {
+        return redirect(route('categories.add'));
+        //return 'sub mit  add dmuc';
+    }
 
-   public function deleteCategory($id){
-    return 'delete cate submit';
-   }
+    public function updateCategory($id)
+    {
+        return 'submit update';
+    }
+
+    public function deleteCategory($id)
+    {
+        return 'delete cate submit';
+    }
 }

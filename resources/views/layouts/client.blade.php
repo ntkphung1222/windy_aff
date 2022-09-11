@@ -7,16 +7,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Windy</title>
+    <script src="https://kit.fontawesome.com/95ff9730e0.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{{ asset('assets/clients/css/bootstrap.min.css') }}"/>
 </head>
 <body class="container-xl">
-    <header style="background-color: #3DBCAF; height: 300px;text-align: center; padding: 10px" >
-        <div>
-            h
+    <header style="position:relative;background-color: #3DBCAF; justify-content: center;text-align: center" >
+        <div style="padding: 1%">
+            <img style="height: 20%; width: 20%; border-radius: 100%;justify-content: center;text-align: center; "  src="{{ URL::to('/assets/clients/images/avatar.jpg') }}">
         </div>
-        <img src="https://imgur.com/FCNIn6e" class="img-thumbnail" alt="">
-        <div  >
-            bio ne
+        <div >
+           <h6 style="padding: 0px; margin: 0%">Kim Phung</h6>
+        </div >
+        <div style="margin-bottom:2px ">
+            <p>bio ne</p>
+            <i class="fa-light fa-square-xmark"></i>
         </div>
     </header>
     <main>
@@ -24,9 +28,8 @@
         @yield('content')
     </div>
     </main>
-    <footer 
-    style="background-color: #3DBCAF; height: 70px;text-align: center; padding: 10px">
-        <h1>Created by Windy</h1>
+    <footer style="margin-top: 1%;padding: 1px;font-size:10%;background-color:  #3DBCAF; height: 5%;text-align: center">
+        <h6>Created by <a href="/admin/login">Windy</a></h6>
     </footer>
 </body>
 </html>
