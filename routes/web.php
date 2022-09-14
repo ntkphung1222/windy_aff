@@ -4,6 +4,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\ProductsController;
+use App\Http\Controllers\dm_DuongDungController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,6 +17,10 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::prefix('duong-dung')->group(function(){
+    Route::get('/',[dm_DuongDungController::class,'index'] );
+});
 
 Route::prefix('categories')->group(function(){
         Route::get('/',[CategoriesController::class,'index'] );
